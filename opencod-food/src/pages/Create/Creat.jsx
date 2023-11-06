@@ -1,29 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./Creat.css";
 import { useFetch } from "../../hooks/useFetch";
+import { useNavigate } from "react-router-dom";
 
 export default function Creat() {
   const [title, settitle] = useState("");
-  const [metod, setMetod] = useState("");
+  const [method, setMetod] = useState("");
   const [cookingTime, setCookingTime] = useState("");
   const [newIngrediant, setNewIngrediant] = useState("");
-  const [ingrediants, setIngrediants] = useState([]);
+  const [ingredients, setIngrediants] = useState([]);
+  const { postData, data, error } = useFetch(
+    "http://localhost:3000/recipes",
+    "POST"
+  );
+  const navigate = useNavigate();
 
   const handelSubmit = (e) => {
     e.preventDefault();
+    postData({
+      title,
+      ingredients,
+      method,
+      cookingTime: cookingTime + "minuts",
+    });
   };
+  useEffect(() => {
+    if (data) {
+      navigate('/')
+    }
+  }, [data]);
 
   const handelAdd = (e) => {
-    e.preventDefault()
-    if (newIngrediant && !ingrediants.includes(newIngrediant)) {
-      setIngrediants(prev => [...prev, newIngrediant])
-      setNewIngrediant('')
-
+    e.preventDefault();
+    if (newIngrediant && !ingredients.includes(newIngrediant)) {
+      setIngrediants((prev) => [...prev, newIngrediant]);
+      setNewIngrediant("");
     }
-  }
-
-  const {postData,data,error}=useFetch('http://localhost:3000/recipes','POST')
+  };
 
   return (
     <div className="create">
@@ -46,16 +60,26 @@ export default function Creat() {
               onChange={(e) => setNewIngrediant(e.target.value)}
               value={newIngrediant}
             />
-            <button className="btn" onClick={handelAdd}>Add</button>
+            <button className="btn" onClick={handelAdd}>
+              Add
+            </button>
           </div>
         </label>
-        <p>Current Ingredients:<br></br> {ingrediants.map(i => <em key={i}>{ i}<br></br></em>)}</p>
+        <p>
+          Current Ingredients:<br></br>{" "}
+          {ingredients.map((i) => (
+            <em key={i}>
+              {i}
+              <br></br>
+            </em>
+          ))}
+        </p>
         <label>
           <span>Recipe Method: </span>
           <textarea
             type="text"
             onChange={(e) => setMetod(e.target.value)}
-            value={metod}
+            value={method}
           />
         </label>
         <label>
