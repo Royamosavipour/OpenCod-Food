@@ -7,10 +7,10 @@ import './Navbar.css'
 
 export default function Navbar() {
 
-    const {color}=useTheme()
+    const {color,changecolor}=useTheme()
     return (
         <div className='navbar' style={{background:color}}>
-            <nav>
+            <nav onClick={()=>changecolor('red')}>
                 <Link to={'/'} className='brand'><h1>OpenCod Food</h1></Link>
                 <SearchBar />
                 <Link to={'/create'}>Create Recipe</Link>

@@ -12,6 +12,7 @@ import Navbar from './Components/Navbar/Navbar'
 
 
 import './App.css'
+import ThemSelector from './Components/ThemSelector/ThemSelector'
 
 function App() {
 
@@ -20,13 +21,14 @@ function App() {
     <>
       <div className='App'>
         <BrowserRouter>
-          
-          <Navbar/>
+
+          <Navbar />
+          <ThemSelector />
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/create' element={<Create/>} />
-            <Route path='/search' element={<Search/>} />
-            <Route path='/recipe/:id' element={<Recipe/>} />
+            <Route path='/create' element={<Create />} />
+            <Route path='/search' element={<Search />} />
+            <Route path='/recipe/:id' element={<Recipe />} />
           </Routes>
 
 
